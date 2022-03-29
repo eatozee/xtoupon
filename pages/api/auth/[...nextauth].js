@@ -30,7 +30,7 @@ export default NextAuth({
 				// You can also use the `req` object to obtain additional parameters
 				// (i.e., the request IP address)
 
-				const res = await fetch("http://localhost:3000/api/login", {
+				const res = await fetch("https://xtoupon.vercel.app/api/login", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify(credentials),
