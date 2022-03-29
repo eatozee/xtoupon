@@ -30,7 +30,6 @@ export default NextAuth({
 				// You can also use the `req` object to obtain additional parameters
 				// (i.e., the request IP address)
 
-				console.log(credentials);
 				const res = await fetch("http://localhost:3000/api/login", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
@@ -48,6 +47,19 @@ export default NextAuth({
 			},
 		}),
 	],
+	callbacks: {
+		async signIn({ user, account, profile, email, credentials }) {
+			return true;
+		},
+		async session({ session, user, token }) {
+			!isEmpty(token) && (session.role = token.role);
+			return session;
+		},
+		async jwt({ token, user, account, profile, isNewUser }) {
+			!isEmpty(user) && (token.role = user.role);
+			return token;
+		},
+	},
 	adapter,
 	session: { strategy: "jwt" },
 });
